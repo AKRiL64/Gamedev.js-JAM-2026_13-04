@@ -27,6 +27,6 @@ public float moveSpeed = 10f;
     void FixedUpdate()
     {
         Vector3 targetVelocity = new Vector3(moveInput.x, 0, moveInput.y).normalized * moveSpeed;
-        rb.velocity = new Vector3(targetVelocity.x, rb.velocity.y, targetVelocity.z);
+        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
     }
 }

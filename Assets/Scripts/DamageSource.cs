@@ -9,6 +9,7 @@ public class DamageSource : MonoBehaviour
     [SerializeField] private float knockbackStrength = 100f;
     [SerializeField] private List<string> targetTags = new List<string> { "Hitable" };
     [SerializeField] private Transform collider;
+    [SerializeField] private bool hitStop;
     private bool isBusy;
 
     private void Start()
@@ -21,6 +22,7 @@ public class DamageSource : MonoBehaviour
         Debug.Log("damage");
         if (targetTags.Contains(other.tag))
         {
+            //TimeManager.Instance.HitStop(0.1f);
             if (other.TryGetComponent(out Hitable victim))
             {
                 Vector3 hitDir = (other.transform.position - transform.position).normalized;

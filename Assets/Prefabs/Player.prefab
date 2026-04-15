@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageSource
   damage: 1
-  knockbackStrength: 100
+  knockbackStrength: 15
   targetTags:
   - Hitable
   collider: {fileID: 5730504772918629775}

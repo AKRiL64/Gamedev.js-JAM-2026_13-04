@@ -9,11 +9,11 @@ public class HitVisual : MonoBehaviour
     MaterialPropertyBlock block;
     private Hitable hitable;
     [SerializeField] private Transform particleSystem;
-    [SerializeField] private float flashDuration = 0.15f;
+    [SerializeField] private float flashDuration = 0.2f;
     private Vector3 originalScale;
     void Awake()
     {
-        rend = GetComponentInChildren<SpriteRenderer>();
+        rend = GetComponentInChildren<Renderer>();
         block = new MaterialPropertyBlock();
     }
 
@@ -56,7 +56,7 @@ public class HitVisual : MonoBehaviour
     
     IEnumerator ScaleHitRoutine()
     {
-        float duration = 0.1f;
+        float duration = 0.3f;
         float maxScaleMultiplier = 1.2f;
 
         float t = 0f;

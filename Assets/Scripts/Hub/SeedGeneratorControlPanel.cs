@@ -17,6 +17,5 @@ public class SeedGeneratorControlPanel : MonoBehaviour
         {
             Debug.LogWarning("Could not materialize seeds");
         }
-        
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
+    [SerializeField] private GameObject player;
     private List<InteractiveObject> interactiveObjects = new List<InteractiveObject>();
 
     private InteractiveObject currentTarget;
@@ -11,7 +12,7 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && currentTarget)
         {
-            currentTarget.Interact();
+            currentTarget.Interact(player);
             Debug.Log("Interacting with " + currentTarget.name);
         }
         // Debug.Log(interactiveObjects.Count);

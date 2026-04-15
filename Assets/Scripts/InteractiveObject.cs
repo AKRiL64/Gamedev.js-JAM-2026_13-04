@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class InteractiveObject : MonoBehaviour
 {
-    public static event Action<EmptyEventArgs> OnInteract;
+    public event Action<GameObject> OnInteract;
     
     [SerializeField] private SelectableObject selectablePart;
 
-    public void Interact()
+    public void Interact(GameObject actor)
     {
-        OnInteract?.Invoke(new EmptyEventArgs());
+        OnInteract?.Invoke(actor);
     }
 
     public void Select()

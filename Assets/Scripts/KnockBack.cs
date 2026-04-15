@@ -21,7 +21,7 @@ public class KnockBack : MonoBehaviour
         hitable.OnDamaged -= ApplyKnockBack;
     }
 
-    private void ApplyKnockBack(Vector3 force)
+    private void ApplyKnockBack(Vector3 force, float damage)
     {
         if (rb == null) return;
         rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);

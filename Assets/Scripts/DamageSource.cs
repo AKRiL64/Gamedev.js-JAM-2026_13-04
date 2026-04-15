@@ -49,4 +49,9 @@ public class DamageSource : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         isBusy = false;
     }
+
+    public void SetColliderActive(bool a)
+    {
+        collider.gameObject.SetActive(a);
+    }
 }

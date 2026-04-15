@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
         hitable.OnDeath -= OnDeath;
     }
 
-    void OnDamaged(Vector3 direction)
+    void OnDamaged(Vector3 direction, float damage)
     {
         OnHit?.Invoke(direction);
         Debug.Log("takeDamahgr");

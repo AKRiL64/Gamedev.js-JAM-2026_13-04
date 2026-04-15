@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (pivotTransform!=null)
             transform.position = Vector3.Lerp(transform.position, pivotTransform.position + offset, speed * Time.deltaTime);

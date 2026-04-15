@@ -24,7 +24,7 @@ public class HitVisual : MonoBehaviour
         hitable.OnDamaged += OnHit;
     }
 
-    void OnHit(Vector3 direction)
+    void OnHit(Vector3 direction, float damage)
     {
         Quaternion rot = Quaternion.LookRotation(direction);
         Instantiate(particleSystem, transform.position, rot);

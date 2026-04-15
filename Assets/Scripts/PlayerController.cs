@@ -11,21 +11,23 @@ public class PlayerController : MonoBehaviour
     public PlayerState currentState;
     [SerializeField] private float moveSpeed = 10f;
 
-    [SerializeField] private DamageSource currentWeapon;
+    [SerializeField] private WeaponController currentWeapon;
     private Vector2 moveInput;
     
     private Rigidbody rb;
     private Hitable hitable;
-    private Camera mainCamera;
+
     
     public event Action<Vector2> HandleMovement;
     public event Action OnDisableVisual;
+    public event Action OnAttackInput, OnAttackInterruption;
+    
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         hitable = GetComponent<Hitable>();
-        mainCamera = Camera.main;
+        currentWeapon.SetPlayerController(this);
     }
     
     void OnEnable()
@@ -40,9 +42,13 @@ public class PlayerController : MonoBehaviour
         hitable.OnDeath -= OnDeath;
     }
 
-    void OnDamaged(Vector3 dir)
+    void OnDamaged(Vector3 dir, float damage)
     {
         StartCoroutine(StunRoutine(0.5f));
+        if (damage > currentWeapon.interruptDamage)
+        {
+            OnAttackInterruption?.Invoke();
+        }
     }
 
     private void OnDeath()
@@ -70,8 +76,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            RotateWeaponToMouse();
-            currentWeapon.InflictDamage(0.1f,0,1);    
+            OnAttackInput.Invoke();
         }
         
         HandleMovement?.Invoke(moveInput);
@@ -91,23 +96,6 @@ public class PlayerController : MonoBehaviour
             {
                 break;
             }
-        }
-    }
-
-    private void RotateWeaponToMouse()
-    {
-        Plane plane = new Plane(Vector3.up, currentWeapon.transform.position);
-
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-        if (plane.Raycast(ray, out float enter))
-        {
-            Vector3 hitPoint = ray.GetPoint(enter);
-
-            Vector3 direction = hitPoint - currentWeapon.transform.position;
-            direction.y = 0f;
-
-            currentWeapon.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
 }

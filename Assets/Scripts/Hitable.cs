@@ -7,7 +7,7 @@ public class Hitable : MonoBehaviour
     [SerializeField] private float currentHP;
     
 
-    public event Action<Vector3> OnDamaged; 
+    public event Action<Vector3, float> OnDamaged; 
     public event Action OnDeath; 
 
     void Start() => currentHP = maxHp;
@@ -15,7 +15,7 @@ public class Hitable : MonoBehaviour
     public void TakeDamage(float damage, Vector3 knockbackVector)
     {
         currentHP -= damage;
-        OnDamaged?.Invoke(knockbackVector);
+        OnDamaged?.Invoke(knockbackVector, damage);
 
         if (currentHP <= 0) Die();
     }

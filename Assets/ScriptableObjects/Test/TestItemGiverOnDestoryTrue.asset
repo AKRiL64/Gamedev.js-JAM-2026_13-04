@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5f6465334fb3e42b6205004e737956, type: 3}
+  m_Name: TestItemGiverOnDestoryTrue
+  m_EditorClassIdentifier: Assembly-CSharp::Hub.InventoryEntrySo
+  name: GiverOnDestroyTrue
+  appearance: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  prefab: {fileID: 5625654916382877646, guid: 15c6a44cebfbde14394506441afb27cc, type: 3}

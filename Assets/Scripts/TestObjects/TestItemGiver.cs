@@ -6,6 +6,7 @@ public class TestItemGiver : MonoBehaviour
 {
     [SerializeField] InteractiveObject interactiveObject;
     [SerializeField] private InventoryEntrySo inventoryEntrySo;
+    [SerializeField] private bool destroyOnInteract;
 
     public void Start()
     {
@@ -19,6 +20,13 @@ public class TestItemGiver : MonoBehaviour
         if (!playerItemSlotController.SetItem(inventoryEntrySo))
         {
             Debug.LogWarning("Can't give item to " + player.name);
+        }
+        else
+        {
+            if (destroyOnInteract)
+            {
+                Destroy(gameObject);
+            }
         }
         
     }

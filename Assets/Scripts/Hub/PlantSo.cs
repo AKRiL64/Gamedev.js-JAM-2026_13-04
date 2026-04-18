@@ -8,7 +8,8 @@ namespace Hub
         public enum PlantType
         {
             Buckwheat,
-            BloomingSally
+            BloomingSally,
+            NullPlant
         }
 
         public new string name;
@@ -21,7 +22,7 @@ namespace Hub
         
         private int currentGrowTime = 0;
         
-        public bool IsGrown => currentGrowTime > growTimeMax;
+        public bool IsGrown => currentGrowTime >= growTimeMax;
         
         public void GrowByOne()
         {

@@ -12,20 +12,24 @@ namespace UI
         [SerializeField] private PlantInfoPanel plantInfoPanel;
         [SerializeField] private Button plantDeleteButton;
         [SerializeField] private PlantPot plantPot;
+        private PlantSo nullPlantSo;
 
         private void Awake()
         {
             plantDeleteButton.onClick.AddListener(DeletePlant);
+            
         }
 
         private void DeletePlant()
         {
-            plantPot.ChangePlant(null);
+            plantPot.ChangePlant(nullPlantSo);
         }
         
         private void Start()
         {
             plantPot.OnPlantChanged += OnPlantChanged;
+            nullPlantSo = plantPot.nullPlantSo;
+            OnPlantChanged(plantPot.GetPlantSo());
         }
 
         private void OnPlantChanged(PlantSo plantSo)

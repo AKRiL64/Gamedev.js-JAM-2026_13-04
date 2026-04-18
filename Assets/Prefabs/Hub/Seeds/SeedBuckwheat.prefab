@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestItemGiver
   interactiveObject: {fileID: 545224798730833979}
-  inventoryEntrySo: {fileID: 11400000, guid: b241592f1b7d6414580363381953b4a9, type: 2}
+  inventoryEntrySo: {fileID: 11400000, guid: 5aa71d33d2d1fa04bacca5565355d659, type: 2}
   destroyOnInteract: 1
 --- !u!1 &5723164781203328473
 GameObject:

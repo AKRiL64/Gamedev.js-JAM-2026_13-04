@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hub.PlantSo
   name: Buckwheat
   plantType: 0
-  growTimeMax: 0
+  growTimeMax: 1
   plantSprite: {fileID: 21300000, guid: dd3db1e5b4263437aa298781bd55d726, type: 3}
-  grownPlantPrefab: {fileID: 0}
-  notGrownPlantPrefab: {fileID: 0}
+  grownPlantPrefab: {fileID: 9104923235424926737, guid: 843d0271a3a5ba54abffb785d2252dba,
+    type: 3}
+  notGrownPlantPrefab: {fileID: 9104923235424926737, guid: 3672717b1345c0447a1daa3fe5ad6f44,
+    type: 3}

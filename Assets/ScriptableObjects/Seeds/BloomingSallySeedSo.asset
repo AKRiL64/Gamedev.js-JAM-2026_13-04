@@ -16,4 +16,4 @@ MonoBehaviour:
   appearance: {fileID: 21300000, guid: d1508e1dc42abb745b24c8891a614d2a, type: 3}
   prefab: {fileID: 5625654916382877646, guid: 1eadf0173fc21334281dc5b4f3cbea33, type: 3}
   itemTypes: 0000000001000000
-  plantSo: {fileID: 0}
+  plantSo: {fileID: 11400000, guid: a075699249c2fe14a9810ab9b0f2a395, type: 2}

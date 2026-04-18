@@ -499,8 +499,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hub.HubState
   availableSeeds:
-  - {fileID: 11400000, guid: b241592f1b7d6414580363381953b4a9, type: 2}
-  - {fileID: 11400000, guid: e8ccc1ff24050a749bb217bbfd7d0052, type: 2}
+  - {fileID: 11400000, guid: 5aa71d33d2d1fa04bacca5565355d659, type: 2}
+  - {fileID: 11400000, guid: 4c6d02f148915bc488915eef17e878fd, type: 2}
 --- !u!4 &1276020880
 Transform:
   m_ObjectHideFlags: 0

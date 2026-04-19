@@ -6,15 +6,17 @@ TagManager:
   tags:
   - DamageInflictor
   - Hitable
+  - Smoke
+  - Parriable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Smoke
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Hitbox
   - 
   - 
   - 

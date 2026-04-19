@@ -9,7 +9,7 @@ public class HitVisual : MonoBehaviour
     MaterialPropertyBlock block;
     private Hitable hitable;
     [SerializeField] private Transform particleSystem;
-    [SerializeField] private float flashDuration = 0.2f;
+    [SerializeField] private float flashDuration = 0.2f, scaleEffectFactor = 1.1f;
     private Vector3 originalScale;
     void Awake()
     {
@@ -24,7 +24,7 @@ public class HitVisual : MonoBehaviour
         hitable.OnDamaged += OnHit;
     }
 
-    void OnHit(Vector3 direction, float damage)
+    void OnHit(Vector3 direction, float damage, GameObject attacker)
     {
         Quaternion rot = Quaternion.LookRotation(direction);
         Instantiate(particleSystem, transform.position, rot);
@@ -57,7 +57,7 @@ public class HitVisual : MonoBehaviour
     IEnumerator ScaleHitRoutine()
     {
         float duration = 0.3f;
-        float maxScaleMultiplier = 1.2f;
+        float maxScaleMultiplier = scaleEffectFactor;
 
         float t = 0f;
 

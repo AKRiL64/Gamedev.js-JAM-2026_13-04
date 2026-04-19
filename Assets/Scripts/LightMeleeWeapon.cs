@@ -1,24 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LightMeleeWeapon : WeaponController
 {
     [SerializeField] private float slashDuration = 0.2f;
     [SerializeField] private float slashRecover = 1f;
+    [SerializeField] private float slashDelay = 1f;
     [SerializeField] private float comboReset = 0.5f;
     [SerializeField] private float slashAngle = 90f;
-    
+    [SerializeField] private float slashStrength = 10f;
+    public float weight = 0.5f;
+    private Vector3 direction;
     private int comboIndex = 0, maxCombo;
     private bool queuedNextAttack = false, isQueueAllowed = false, canHit = true;
     private Func<IEnumerator>[] comboAttacks;
 
-    [SerializeField] private GameObject trail;
+    [SerializeField] private GameObject[] trails;
     private Coroutine _attackCoroutine;
 
     private Camera mainCamera;
-    
+    public event Action OnParry;
     void Awake()
     {
         mainCamera = Camera.main;
@@ -28,7 +32,25 @@ public class LightMeleeWeapon : WeaponController
             SlashRoutine
         };
         maxCombo = comboAttacks.Length;
+
     }
+    
+    void OnEnable()
+    {
+        damageSource.OnParry += InvokeParry;
+    }
+
+    private void OnDisable()
+    {
+        damageSource.OnParry -= InvokeParry;
+    }
+
+    void Start()
+    {
+        playerController.OnAttackInput += Attack;
+        playerController.OnAttackInterruption += AttackInterrupt;
+    }
+
     protected override void Attack()
     {    
         
@@ -43,7 +65,10 @@ public class LightMeleeWeapon : WeaponController
             queuedNextAttack = true;
         }
     }
-
+    private void InvokeParry()
+    {
+        OnParry?.Invoke();
+    }
     protected override void AttackInterrupt()
     {
         
@@ -54,22 +79,33 @@ public class LightMeleeWeapon : WeaponController
         if (comboIndex < maxCombo)
         {
             _attackCoroutine = StartCoroutine(comboAttacks[comboIndex]());
-            comboIndex++;
         }
         else
         {
+            InvokeOnAttackEnd();
             _attackCoroutine = null;
             canHit = false;
-            StartCoroutine(WaitForRecover());
+            StartCoroutine(WaitForDelay());
         }
     }
 private IEnumerator SlashRoutine()
 {
     float elapsed = 0f;
     
-    trail.SetActive(true);
-    damageSource.SetColliderActive(true);
-
+    isQueueAllowed = false;
+    
+    trails[comboIndex].SetActive(true);
+    damageSource.InflictDamage(slashDuration,0,0);
+    int index = comboIndex;
+    InvokeOnAttackStart();
+    if (comboIndex == 0)
+    {
+        InvokeKnockback(direction, slashStrength);
+    }
+    else
+    {
+        InvokeKnockback(direction, slashStrength * 0.5f);
+    }
     while (elapsed < slashDuration)
     {
         if (elapsed > slashDuration * 0.4f)
@@ -79,9 +115,9 @@ private IEnumerator SlashRoutine()
         elapsed += Time.deltaTime;
         yield return null;
     }
-    
-    damageSource.SetColliderActive(false);
-    trail.SetActive(false);
+    trails[index].SetActive(false);
+    comboIndex++;
+    yield return new WaitForSeconds(slashRecover);
     if (queuedNextAttack)
     {
         queuedNextAttack = false; 
@@ -89,29 +125,36 @@ private IEnumerator SlashRoutine()
     }
     else
     {
+        InvokeOnAttackEnd();
         _attackCoroutine = null;
-        canHit = false;
-        StartCoroutine(WaitForRecover());
+        StartCoroutine(WaitForCombo());
     }
 }
 
-private IEnumerator WaitForRecover()
+private IEnumerator WaitForDelay()
 {
     yield return new WaitForSeconds(slashRecover);
     comboIndex = 0;
     canHit = true;
-}private IEnumerator WaitForCombo()
+}
+private IEnumerator WaitForCombo()
 {
     float elapsed = 0f;
     while (elapsed < slashDuration)
     {
-        if (elapsed > slashDuration * 0.4f)
-        {
-            isQueueAllowed = true;
-        }
         elapsed += Time.deltaTime;
+        if (queuedNextAttack)
+        {
+            StartNextAttack();
+            isQueueAllowed = false;
+            yield break;
+        }
         yield return null;
     }
+    isQueueAllowed = false;
+    _attackCoroutine = null;
+    canHit = false;
+    StartCoroutine(WaitForDelay());
 }
 
 
@@ -125,10 +168,12 @@ private void RotateToMouse()
     if (plane.Raycast(ray, out float enter))
     {
         Vector3 hitPoint = ray.GetPoint(enter);
-        Vector3 direction = hitPoint - transform.position;
+        direction = hitPoint - transform.position;
         direction.y = 0f;
         
         transform.rotation = Quaternion.LookRotation(direction);
+
     }
+
 }
 }

@@ -3,20 +3,16 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
-    private PlayerController playerController;
+    protected PlayerController playerController;
     public float interruptDamage;
 
     [SerializeField] protected DamageSource damageSource;
-    void Awake()
-    {
+    public event Action<Vector3> OnKnockback;
+    public event Action OnAttackEnd;
+    public event Action OnAttackStart;
+    
 
-    }
 
-    private void Start()
-    {
-        playerController.OnAttackInput += Attack;
-        playerController.OnAttackInterruption += AttackInterrupt;
-    }
 
     protected virtual void Attack()
     {
@@ -32,4 +28,20 @@ public class WeaponController : MonoBehaviour
     {
         playerController = p;
     }
+
+    protected void InvokeOnAttackEnd()
+    {
+        OnAttackEnd?.Invoke();
+    }
+
+    protected void InvokeOnAttackStart()
+    {
+        OnAttackStart?.Invoke();
+    }
+    protected void InvokeKnockback(Vector3 dir, float str)
+    {
+        OnKnockback?.Invoke(dir * str);
+    }
+
+
 }

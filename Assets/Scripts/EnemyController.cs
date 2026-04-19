@@ -1,18 +1,27 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
     private SpriteRenderer SpriteRenderer;
 
-    private Rigidbody rb;
+    protected Rigidbody rb;
     private Hitable hitable;
-    public event Action<Vector3> OnHit;
-    void Awake()
+
+    protected Transform player;
+    protected bool staggered;
+    protected void Awake()
     {
         rb = GetComponent<Rigidbody>();
         hitable = GetComponent<Hitable>();
     }
+    
+    void Start()
+    {
+        player = PlayerController.Instance.transform;
+    }
+
     
     void OnEnable()
     {
@@ -26,13 +35,16 @@ public class EnemyController : MonoBehaviour
         hitable.OnDeath -= OnDeath;
     }
 
-    void OnDamaged(Vector3 direction, float damage)
+    public virtual void OnParried()
     {
-        OnHit?.Invoke(direction);
-        Debug.Log("takeDamahgr");
+        Debug.Log("Enemy got parried");
     }
 
-    void OnDeath()
+    protected virtual void OnDamaged(Vector3 direction, float damage, GameObject attacker)
+    {
+    }
+
+    protected virtual void OnDeath()
     {
         Destroy(gameObject);
     }

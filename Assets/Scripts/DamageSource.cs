@@ -7,29 +7,41 @@ public class DamageSource : MonoBehaviour
 {
     [SerializeField] private float damage = 1f;
     [SerializeField] private float knockbackStrength = 100f;
-    [SerializeField] private List<string> targetTags = new List<string> { "Hitable" };
     [SerializeField] private Transform collider;
-    [SerializeField] private bool hitStop;
-    private bool isBusy;
-
+    [SerializeField] private Collider toIgnore;
+    [SerializeField] private bool hitStop, canParry;
+    [SerializeField] private GameObject owner;
+    private bool isBusy, inWindow;
+    private HashSet<Hitable> hitTargets = new HashSet<Hitable>();
+    public event Action OnParry; 
     private void Start()
     {
-        //collider.gameObject.SetActive(false);
+        if (toIgnore != null && collider != null)
+        {
+            Collider myCol = collider.GetComponent<Collider>();
+
+            if (myCol != null && toIgnore != null)
+            {
+                Physics.IgnoreCollision(myCol, toIgnore);
+            }
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        Debug.Log("damage");
-        if (targetTags.Contains(other.tag))
+        if (other.TryGetComponent(out Hitable victim) && !hitTargets.Contains(victim) && !inWindow)
         {
-            //TimeManager.Instance.HitStop(0.1f);
-            if (other.TryGetComponent(out Hitable victim))
-            {
-                Vector3 hitDir = (other.transform.position - transform.position).normalized;
-                hitDir.y = 0;
+            Vector3 hitDir = (other.transform.position - transform.position).normalized;
+            hitDir.y = 0;
 
-                victim.TakeDamage(damage, hitDir * knockbackStrength);
-            }
+            victim.TakeDamage(damage, hitDir * knockbackStrength, owner);
+            hitTargets.Add(victim);
+        }
+
+        if (other.CompareTag("Parriable") && inWindow && canParry)
+        {
+            other.GetComponentInParent<EnemyController>().OnParried();
+            OnParry?.Invoke();
         }
     }
 
@@ -39,19 +51,39 @@ public class DamageSource : MonoBehaviour
             StartCoroutine(InflictRoutine(time, delay,cooldown));
     }
 
-    IEnumerator InflictRoutine(float time, float delay, float cooldown)
+    public void Interrupt()
     {
-        isBusy = true;
-        yield return new WaitForSeconds(delay);
-        collider.gameObject.SetActive(true);
-        yield return new WaitForSeconds(time);
+        StopAllCoroutines();
         collider.gameObject.SetActive(false);
-        yield return new WaitForSeconds(cooldown);
         isBusy = false;
+        inWindow = false;
     }
 
-    public void SetColliderActive(bool a)
+    public void SetDamage(float newDamage)
     {
-        collider.gameObject.SetActive(a);
+        damage = newDamage;
+    }
+    IEnumerator InflictRoutine(float time, float parryWindow, float cooldown)
+    {
+        isBusy = true;
+
+        hitTargets.Clear();
+
+        inWindow = true;
+        Debug.Log("In window");
+        collider.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(parryWindow);
+
+        inWindow = false;
+        Debug.Log("Not window");
+
+        yield return new WaitForSeconds(time);
+
+        collider.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(cooldown);
+
+        isBusy = false;
     }
 }

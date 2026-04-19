@@ -13,7 +13,36 @@ namespace Hub
         [SerializeField] private InteractiveObject interactiveObject;
         [SerializeField] private GameObject closingWindow;
         [SerializeField] public PlantSo nullPlantSo;
+        [SerializeField] public GameObject needsWaterPrompt;
+        [SerializeField] public PlantPotGround plantPotGround;
         private PlantSo plantSo;
+        private bool isWatered = false;
+
+        public bool IsWatered
+        {
+            get => isWatered;
+            set
+            {
+                isWatered = value;
+
+                if (plantPotGround)
+                {
+                    plantPotGround.SetWatered(isWatered);
+                }
+
+                if (needsWaterPrompt)
+                {
+                    if (!isWatered && plantSo.plantType != PlantSo.PlantType.NullPlant)
+                    {
+                        needsWaterPrompt.SetActive(true);
+                    }
+                    else
+                    {
+                        needsWaterPrompt.SetActive(false);
+                    }
+                }
+            }
+        }
 
         public void ChangePlant(PlantSo newPlantSo)
         {
@@ -24,6 +53,9 @@ namespace Hub
             {
                 UpdatePlant();
             }
+            
+            IsWatered = false;
+            
             OnPlantChanged?.Invoke(plantSo);
         }
 
@@ -57,9 +89,16 @@ namespace Hub
                 return;
             }
             InventoryEntrySo item = playerItemSlotController.CurrentItem;
+            
             if (item && item.itemTypes.Contains(InventoryEntrySo.ItemTypes.Seed) && TryToPlant(item))
             {
                 playerItemSlotController.ClearItem();
+            } else if (item 
+                       && !isWatered 
+                       && item.itemTypes.Contains(InventoryEntrySo.ItemTypes.WateringCan) 
+                       && plantSo.plantType != PlantSo.PlantType.NullPlant)
+            {
+                Water();
             }
             else
             {
@@ -84,6 +123,11 @@ namespace Hub
             
             ChangePlant(seedSo.plantSo);
             return true;
+        }
+
+        private void Water()
+        {
+            IsWatered = true;
         }
         
         private void ShowUi()

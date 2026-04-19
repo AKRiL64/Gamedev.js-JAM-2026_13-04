@@ -8,7 +8,8 @@ namespace Hub
         public enum ItemTypes
         {
             Disposable,
-            Seed
+            Seed,
+            WateringCan
         }
         public new string name;
         public Sprite appearance;

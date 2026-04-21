@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class DamageSource : MonoBehaviour
 {
+    public enum DamageType
+    {
+        Physical,
+        Smoke
+    }
+
+    [SerializeField] private DamageType damageType = DamageType.Physical;
     [SerializeField] private float damage = 1f;
     [SerializeField] private float knockbackStrength = 100f;
     [SerializeField] private Transform collider;
@@ -34,7 +41,7 @@ public class DamageSource : MonoBehaviour
             Vector3 hitDir = (other.transform.position - transform.position).normalized;
             hitDir.y = 0;
 
-            victim.TakeDamage(damage, hitDir * knockbackStrength, owner);
+            victim.TakeDamage(damage, hitDir * knockbackStrength, owner, damageType);
             hitTargets.Add(victim);
         }
 
@@ -48,7 +55,10 @@ public class DamageSource : MonoBehaviour
     public void InflictDamage(float time, float delay, float cooldown)
     {
         if (!isBusy)
-            StartCoroutine(InflictRoutine(time, delay,cooldown));
+        {
+            isBusy = true;
+            StartCoroutine(InflictRoutine(time, delay, cooldown));
+        }
     }
 
     public void Interrupt()

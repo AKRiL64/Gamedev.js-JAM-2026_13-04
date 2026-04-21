@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     private SpriteRenderer SpriteRenderer;
 
     protected Rigidbody rb;
-    private Hitable hitable;
+    protected Hitable hitable;
 
     protected Transform player;
     protected bool staggered;

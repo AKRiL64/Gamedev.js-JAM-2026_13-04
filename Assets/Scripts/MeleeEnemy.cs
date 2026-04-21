@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MeleeEnemy : EnemyController
 {
@@ -22,7 +23,12 @@ public class MeleeEnemy : EnemyController
     [SerializeField] private float minStrafeRadius = 2f;
     [SerializeField] private float maxStrafeRadius = 2.5f;
     [SerializeField] private float minDistanceFromPlayer = 1.8f;
-
+    
+    [SerializeField] private LayerMask smokeLayer;
+    [SerializeField] private float smokeCheckRadius = 1.2f;
+    [SerializeField] private float smokeSlowMultiplier = 0.5f;
+    
+    [SerializeField] private Slider hpBar;
     private NavMeshAgent agent;
     private DamageSource hitBox;
 
@@ -95,8 +101,12 @@ public class MeleeEnemy : EnemyController
             case EnemyState.Attack:
                 if (distance > attackDistance)
                     MoveToPlayer();
-                else if(!isAttacking && attackCoroutine==null)
+                else if (!isAttacking && attackCoroutine == null)
+                {
+                    isAttacking = true;
                     attackCoroutine = StartCoroutine(AttackRoutine());
+                }
+
                 break;
 
             case EnemyState.Recovery:
@@ -104,6 +114,17 @@ public class MeleeEnemy : EnemyController
 
             case EnemyState.Stagger:
                 break;
+        }
+        //TODO move to a separate script
+        void CheckSmoke()
+        {
+            bool inSmoke = Physics.CheckSphere(
+                transform.position,
+                smokeCheckRadius,
+                smokeLayer
+            );
+
+            agent.speed = inSmoke ? moveSpeed * smokeSlowMultiplier : moveSpeed;
         }
     }
 
@@ -163,7 +184,7 @@ public class MeleeEnemy : EnemyController
 
     IEnumerator AttackRoutine()
     {
-        isAttacking = true;
+        Debug.Log("do anal");
         state = EnemyState.Attack;
 
         agent.isStopped = true;
@@ -177,11 +198,13 @@ public class MeleeEnemy : EnemyController
 
         state = EnemyState.Battle;
         isAttacking = false;
+        attackCoroutine = null;
         agent.isStopped = false;
     }
 
     void DealDamage()
     {
+        Debug.Log("fisting");
         Vector3 dir = GetPlayerDirection();
         hitboxPivot.rotation = Quaternion.LookRotation(dir);
         hitBox.InflictDamage(0.1f, 0.5f, 0.1f);
@@ -208,6 +231,8 @@ public class MeleeEnemy : EnemyController
 
             isAttacking = false;
         }
+
+        hpBar.value = hitable.GetHealthFactor();
     }
 
     IEnumerator StaggerRoutine()

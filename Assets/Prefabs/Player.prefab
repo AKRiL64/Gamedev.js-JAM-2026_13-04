@@ -174,7 +174,7 @@ MonoBehaviour:
   interruptDamage: 0
   damageSource: {fileID: 0}
   attackLength: 0
-  smokePrefab: {fileID: 385627089794471458, guid: a4a25f75bc2c88045929c0e563356f1c,
+  smokePrefab: {fileID: 7909174774862731329, guid: d3471d4506a99134087a777e6c155fdd,
     type: 3}
   pivot: {fileID: 975168681789370671}
 --- !u!1 &2268813340338469889
@@ -359,6 +359,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHp: 5
   currentHP: 5
+  multipliers:
+  - type: 1
+    multiplier: 0
 --- !u!114 &7213203921737939771
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,7 +37,7 @@ public class SmokeWeapon : WeaponController
     {
         InvokeOnAttackStart();
         var s = Instantiate(smokePrefab, pivot.position, Quaternion.LookRotation(direction, Vector3.up));
-        s.GetComponent<SmokeParticle>().SetDirection(direction);
+        s.GetComponentInChildren<SmokeParticle>().SetDirection(direction);
         yield return new WaitForSeconds(attackLength);
         InvokeOnAttackEnd();
     }

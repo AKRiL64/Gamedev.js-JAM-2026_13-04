@@ -136,11 +136,11 @@ MonoBehaviour:
   smokePrefab: {fileID: 385627089794471458}
   particleSystem: {fileID: 3231161874026630658}
   collider: {fileID: 8335106174305485360}
-  stepsLeft: 5
+  stepsLeft: 7
   maxSteps: 5
   spawnDelay: 0.05
-  lifetime: 5
-  destroyDelay: 5
+  lifetime: 4.5
+  destroyDelay: 1
   planeNormal: {x: 0, y: 1, z: 0}
   spreadAngle: 30
   turnAngle: 45
@@ -151,6 +151,7 @@ MonoBehaviour:
   smokeMask:
     serializedVersion: 2
     m_Bits: 9
+  cluster: {fileID: 0}
 --- !u!1 &1140712279716678099
 GameObject:
   m_ObjectHideFlags: 0

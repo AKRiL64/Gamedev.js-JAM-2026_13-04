@@ -33,6 +33,7 @@ public class SmokeParticle : MonoBehaviour
     private Vector3 planeRight;
     private float spawnChance;
     private bool hasSpawned;
+    public SmokeCluster cluster;
 
     private void Start()
     {
@@ -121,10 +122,12 @@ public class SmokeParticle : MonoBehaviour
                 continue;
 
             GameObject next = Instantiate(smokePrefab, nextPos, Quaternion.identity);
-
+    
             SmokeParticle sp = next.GetComponent<SmokeParticle>();
+
             if (sp != null)
             {
+                sp.cluster = this.cluster;
                 sp.stepsLeft = stepsLeft - 1;
                 sp.baseDirection = planeForward;
                 sp.planeNormal = planeNormal;
@@ -143,5 +146,21 @@ public class SmokeParticle : MonoBehaviour
         collider.enabled = false;
         yield return new WaitForSeconds(destroyDelay);
         Destroy(gameObject);
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent(out Hitable h))
+        {
+            cluster?.Register(h);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out Hitable h))
+        {
+            cluster?.Unregister(h);
+        }
     }
 }

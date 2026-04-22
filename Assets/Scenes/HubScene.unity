@@ -287,7 +287,7 @@ Camera:
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 1
+  m_FOVAxisMode: 0
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -307,7 +307,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 80
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -333,13 +333,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1118797782}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
+  m_LocalRotation: {x: 0.043619405, y: 0, z: 0, w: 0.9990483}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 5, y: 0, z: 0}
 --- !u!114 &1118797786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,11 +352,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b37ffe846813a314e8a38b748476365b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  pivotTransform: {fileID: 168769622332671581}
+  pivotTransform: {fileID: 1585440885}
   speed: 5
   offsetX: 0
-  offsetY: -4
-  offsetZ: 1.5
+  offsetY: 1
+  offsetZ: -3
 --- !u!114 &1118797787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,6 +584,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 776a2c7f8027526468bd22741186dc09, type: 3}
+--- !u!4 &1585440885 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8469716156675968050, guid: cd3ec45e6bffd3243a4c8c574d243208,
+    type: 3}
+  m_PrefabInstance: {fileID: 3613249831078604061}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1597778001
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,12 +703,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &168769622332671581 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2658537563848876912, guid: cd3ec45e6bffd3243a4c8c574d243208,
-    type: 3}
-  m_PrefabInstance: {fileID: 3613249831078604061}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3613249831078604061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -760,6 +760,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4585104868503673325, guid: cd3ec45e6bffd3243a4c8c574d243208,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804563759946435537, guid: cd3ec45e6bffd3243a4c8c574d243208,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hitable
       objectReference: {fileID: 0}
     - target: {fileID: 7256462343965008859, guid: cd3ec45e6bffd3243a4c8c574d243208,
         type: 3}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance { get; private set; }
     public enum PlayerState { Default, Attacking, Dashing, Dead, Stunned }
 
+    private PlayerActionRestrictor playerActionRestrictor;
+    
     public PlayerState currentState;
     [SerializeField] private float moveSpeed = 10f;
 
@@ -40,6 +43,11 @@ public class PlayerController : MonoBehaviour
         hitable = GetComponent<Hitable>();
         currentWeapon.SetPlayerController(this);
         specialWeapon.SetPlayerController(this);
+    }
+
+    private void Start()
+    {
+        playerActionRestrictor = PlayerActionRestrictor.GetInstance();
     }
     
     void OnEnable()
@@ -93,6 +101,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (playerActionRestrictor.IsRestricted()) return;
+        
         if (currentState == PlayerState.Default)
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");

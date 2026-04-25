@@ -1,6 +1,8 @@
-﻿namespace Hub
+﻿using UnityEngine;
+
+namespace Hub
 {
-    public class BeeReassignUI
+    public class BeeReassignUI: MonoBehaviour
     {
         
     }

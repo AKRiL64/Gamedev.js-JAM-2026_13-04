@@ -1,19 +1,35 @@
 using System.Collections.Generic;
+using DefaultNamespace;
+using Hub;
 using UnityEngine;
 
 public class PlayerInteractor : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     private List<InteractiveObject> interactiveObjects = new List<InteractiveObject>();
+    private HubState hubState;
+    private PlayerActionRestrictor playerActionRestrictor;
 
     private InteractiveObject currentTarget;
 
+    private void Start()
+    {
+        hubState = HubState.GetInstance();
+        playerActionRestrictor = PlayerActionRestrictor.GetInstance();
+    }
+
     public void Update()
     {
+        if (playerActionRestrictor.IsRestricted()) return;
         if (Input.GetKeyDown(KeyCode.F) && currentTarget)
         {
             currentTarget.Interact(player);
             Debug.Log("Interacting with " + currentTarget.name);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            hubState.PassTime();
         }
         // Debug.Log(interactiveObjects.Count);
         // Debug.Log(currentTarget);

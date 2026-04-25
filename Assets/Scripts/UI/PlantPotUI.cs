@@ -5,38 +5,46 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class PlantPotUI: MonoBehaviour
+    public class PlantPotUI : MonoBehaviour
     {
         [SerializeField] private Image imageCurrentPlant;
         [SerializeField] private TextMeshProUGUI textCurrentPlantName;
         [SerializeField] private PlantInfoPanel plantInfoPanel;
         [SerializeField] private Button plantDeleteButton;
         [SerializeField] private PlantPot plantPot;
-        private PlantSo nullPlantSo;
 
         private void Awake()
         {
             plantDeleteButton.onClick.AddListener(DeletePlant);
-            
-        }
-
-        private void DeletePlant()
-        {
-            plantPot.ChangePlant(nullPlantSo);
         }
         
         private void Start()
         {
             plantPot.OnPlantChanged += OnPlantChanged;
-            nullPlantSo = plantPot.nullPlantSo;
             OnPlantChanged(plantPot.GetPlantSo());
+        }
+
+        private void DeletePlant()
+        {
+            plantPot.ChangePlant(plantPot.nullPlantSo);
         }
 
         private void OnPlantChanged(PlantSo plantSo)
         {
+            if (plantSo == null) return; 
+
             textCurrentPlantName.text = plantSo.name;
-            imageCurrentPlant.sprite = plantSo.plantSprite;
-            plantInfoPanel.ChangeInfo(plantSo);
+            
+            if (imageCurrentPlant != null)
+            {
+                imageCurrentPlant.enabled = plantSo.plantSprite != null;
+                imageCurrentPlant.sprite = plantSo.plantSprite;
+            }
+
+            if (plantInfoPanel != null)
+            {
+                plantInfoPanel.ChangeInfo(plantSo); 
+            }
         }
     }
 }

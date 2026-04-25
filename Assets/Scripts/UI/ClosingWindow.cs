@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -13,9 +14,15 @@ namespace UI
             gameObject.SetActive(false);
         }
 
+        private void OnEnable()
+        {
+            PlayerActionRestrictor.GetInstance().AddRestrictor(gameObject);
+        }
+
         private void Close()
         {
             gameObject.SetActive(false);
+            PlayerActionRestrictor.GetInstance().RemoveRestrictor(gameObject);
         }
     }
 }

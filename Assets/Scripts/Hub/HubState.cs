@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hub.Hives;
+using SaveSystem;
 using UnityEngine;
 
 namespace Hub
@@ -188,6 +189,50 @@ namespace Hub
         public Dictionary<Honey, int> GetHoneyAmount()
         {
             return honeyInventory;
+        }
+        
+        public void LoadHubData()
+        {
+            var data = SaveManager.Instance.CurrentData;
+            if (data == null) return;
+
+            unassignedGrownPlantsList.Clear();
+            availableGrownPlantsList.Clear();
+            usedGrownPlantsList.Clear();
+
+            honeyInventory.Clear();
+            foreach (var entry in data.honeyInventory)
+            {
+                Honey baseHoney = SaveManager.Instance.gameDatabase.GetHoneyByName(entry.honeyName);
+                if (baseHoney != null) honeyInventory.Add(baseHoney, entry.amount);
+            }
+        }
+
+        public void LoadBeeAssignments()
+        {
+            var data = SaveManager.Instance.CurrentData;
+            var database = SaveManager.Instance.gameDatabase;
+
+            foreach (var beeSave in data.bees)
+            {
+                BeeSo activeBee = beeList.FirstOrDefault(b => b.beeName == beeSave.beeName);
+                if (activeBee == null) continue;
+
+                if (!string.IsNullOrEmpty(beeSave.assignedPlantName))
+                {
+                    PlantSo assignedPlant = unassignedGrownPlantsList.FirstOrDefault(p => p.name == beeSave.assignedPlantName);
+            
+                    if (assignedPlant != null)
+                    {
+                        activeBee.assignedPlantSo = assignedPlant;
+                        AssignPlant(assignedPlant); 
+                    }
+                }
+                else
+                {
+                    activeBee.assignedPlantSo = nullPlant;
+                }
+            }
         }
     }
 }

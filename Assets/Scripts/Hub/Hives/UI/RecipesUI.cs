@@ -82,5 +82,10 @@ namespace Hub
         {
             closingWindowRecipeAdd.SetActive(true);
         }
+        
+        public List<RecipeSo> GetQueuedRecipes()
+        {
+            return addedRecipes;
+        }
     }
 }

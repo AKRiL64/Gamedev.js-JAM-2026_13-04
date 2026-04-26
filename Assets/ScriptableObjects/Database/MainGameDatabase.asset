@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1038837acb4e79aef7181cc4c334f9, type: 3}
+  m_Name: MainGameDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::SaveSystem.GameDatabase
+  allPlants:
+  - {fileID: 11400000, guid: a075699249c2fe14a9810ab9b0f2a395, type: 2}
+  - {fileID: 11400000, guid: e3d0705f2397c6f40bad19af004749ab, type: 2}
+  allBees:
+  - {fileID: 11400000, guid: 6058763a6da1c1b41b13e336c8dd826d, type: 2}
+  - {fileID: 11400000, guid: 0cd0b5083e5b17e40a618e5c3840f187, type: 2}
+  - {fileID: 11400000, guid: 3ab134da4f41c384c88eac99d6c37e28, type: 2}
+  allRecipes:
+  - {fileID: 11400000, guid: e5b752c4e2b55774989297a84f23c6ad, type: 2}
+  - {fileID: 11400000, guid: 69388314b55ef4c4dbe958f408cc28a0, type: 2}
+  allHoney:
+  - {fileID: 11400000, guid: 83d80456a90db8441bbc321ba266533a, type: 2}
+  - {fileID: 11400000, guid: c1764e39bb0221f4193ceb2343c6727c, type: 2}
+  nullPlant: {fileID: 11400000, guid: ee258bfa114b9334cbda2cfb60a262f0, type: 2}

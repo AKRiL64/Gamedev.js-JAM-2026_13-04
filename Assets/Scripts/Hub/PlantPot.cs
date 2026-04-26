@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SaveSystem;
 using UnityEngine;
 
 namespace Hub
@@ -7,6 +8,8 @@ namespace Hub
     public class PlantPot : MonoBehaviour
     {
         public event Action<PlantSo> OnPlantChanged;
+
+        public string potID;
         
         [Header("References")]
         [SerializeField] private Transform potTopPoint;
@@ -164,5 +167,47 @@ namespace Hub
         public PlantSo GetPlantSo() => plantSo;
 
         private void OnDestroy() => interactiveObject.OnInteract -= Interaction;
+        
+        public void SavePotData()
+        {
+            var data = SaveManager.Instance.CurrentData;
+    
+            var potData = data.pots.Find(p => p.potID == this.potID);
+    
+            if (potData.potID == null)
+            {
+                potData = new PotSaveData { potID = this.potID };
+                data.pots.Add(potData);
+            }
+            
+            potData.plantName = plantSo != null ? plantSo.name : nullPlantSo.name;
+            potData.currentGrowth = plantSo != null ? plantSo.GetGrowthTime() : 0;
+            potData.isWatered = this.IsWatered;
+    
+            int index = data.pots.FindIndex(p => p.potID == this.potID);
+            if(index != -1) data.pots[index] = potData;
+        }
+        
+        
+        public void LoadPotData()
+        {
+            var data = SaveManager.Instance.CurrentData;
+            var potSave = data.pots.Find(p => p.potID == this.potID);
+
+            if (!string.IsNullOrEmpty(potSave.potID))
+            {
+                PlantSo basePlant = SaveManager.Instance.gameDatabase.GetPlantByName(potSave.plantName);
+                ChangePlant(basePlant);
+        
+                if (plantSo != null && plantSo.plantType != PlantSo.PlantType.NullPlant)
+                {
+                    plantSo.SetGrowthTime(potSave.currentGrowth);
+                    ClearTopPoint();
+                    UpdatePlant();
+                }
+        
+                IsWatered = potSave.isWatered;
+            }
+        }
     }
 }

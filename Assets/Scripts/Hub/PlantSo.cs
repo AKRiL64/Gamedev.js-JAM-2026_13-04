@@ -35,5 +35,15 @@ namespace Hub
                 Debug.Log("Grow time already grown");
             }
         }
+        
+        public int GetGrowthTime()
+        {
+            return currentGrowTime;
+        }
+
+        public void SetGrowthTime(int potDataCurrentGrowth)
+        {
+            this.currentGrowTime = potDataCurrentGrowth;
+        }
     }
 }

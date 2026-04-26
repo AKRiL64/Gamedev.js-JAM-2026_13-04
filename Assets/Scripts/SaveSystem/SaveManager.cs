@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Hub.Hives;
 using UnityEngine;
 
 namespace SaveSystem
@@ -47,6 +48,21 @@ namespace SaveSystem
                 CurrentData = new GameSaveData();
                 Debug.Log("No save file found in path: " + saveFilePath + " ; Starting new one");
             }
+        }
+        
+        public void AddBeeToSave(string beeName)
+        {
+            BeeSaveData newData = new BeeSaveData 
+            { 
+                beeName = beeName, 
+                assignedPlantName = "" 
+            };
+
+            CurrentData.bees.Add(newData);
+
+            SaveGame();
+    
+            Debug.Log($"New Bee unlocked and saved: {beeName}");
         }
     }
 }

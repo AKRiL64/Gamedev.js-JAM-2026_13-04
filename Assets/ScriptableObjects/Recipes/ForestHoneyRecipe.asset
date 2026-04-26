@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd023c822c674e8ebb7900b935e17b75, type: 3}
   m_Name: ForestHoneyRecipe
   m_EditorClassIdentifier: Assembly-CSharp::Hub.Hives.RecipeSo
-  recipeImage: {fileID: 21300000, guid: 8018f7f22eae14c4b8c25d466fa0d8e8, type: 3}
+  recipeImage: {fileID: 21300000, guid: 5c24151919e97fd4fbf0cdc264177dff, type: 3}
   recipeName: Forest Honey
   plantRequired: {fileID: 11400000, guid: a075699249c2fe14a9810ab9b0f2a395, type: 2}
   honeyProduced: {fileID: 11400000, guid: c1764e39bb0221f4193ceb2343c6727c, type: 2}

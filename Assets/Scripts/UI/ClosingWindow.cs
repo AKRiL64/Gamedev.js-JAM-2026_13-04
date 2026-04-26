@@ -19,7 +19,7 @@ namespace UI
             PlayerActionRestrictor.GetInstance().AddRestrictor(gameObject);
         }
 
-        private void Close()
+        public void Close()
         {
             gameObject.SetActive(false);
             PlayerActionRestrictor.GetInstance().RemoveRestrictor(gameObject);

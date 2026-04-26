@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ForestHoney
   m_EditorClassIdentifier: Assembly-CSharp::Hub.Hives.Honey
   honeyName: ForestHoney
-  honeyIcon: {fileID: 21300000, guid: 8018f7f22eae14c4b8c25d466fa0d8e8, type: 3}
+  honeyIcon: {fileID: 21300000, guid: 5c24151919e97fd4fbf0cdc264177dff, type: 3}

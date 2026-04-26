@@ -15,8 +15,7 @@ MonoBehaviour:
   name: Blooming Sally
   plantType: 1
   growTimeMax: 1
-  plantSprite: {fileID: 3518046427929942809, guid: 4c962e26d197d4a78af313c9eba7f136,
-    type: 3}
+  plantSprite: {fileID: 21300000, guid: 24f8ac6974ff0f0479940bd524f972be, type: 3}
   grownPlantPrefab: {fileID: 9104923235424926737, guid: 1d8c3f7a97d8e58438d2998bc839025f,
     type: 3}
   notGrownPlantPrefab: {fileID: 9104923235424926737, guid: 22437df566b02f54f81d59757e6e8f13,

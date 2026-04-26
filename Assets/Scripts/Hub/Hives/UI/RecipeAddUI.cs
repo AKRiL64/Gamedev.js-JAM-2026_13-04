@@ -32,11 +32,10 @@ namespace Hub
                 RecipeAddEntryUI recipeAddEntryUI = Instantiate(recipeAddEntryUITemplate, listOfRecipeButtons.transform);
                 recipeAddEntryUI.recipeName.text = so.recipeName;
                 recipeAddEntryUI.recipeImage.sprite = so.recipeImage;
-                recipeAddEntryUI.ingredientImage.sprite = so.honeyProduced.honeyIcon;
+                recipeAddEntryUI.ingredientImage.sprite = so.plantRequired.plantSprite;
                 recipeAddEntryUI.addButton.onClick.AddListener(()=>
                 {
                     recipesUI.AddRecipe(so);
-                    hubState.UseGrownPlant(so.plantRequired.plantType);
                     UpdateButtons();
                 });
                 recipeAddEntryUI.so = so;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd023c822c674e8ebb7900b935e17b75, type: 3}
   m_Name: BuckwheatHoneyRecipe
   m_EditorClassIdentifier: Assembly-CSharp::Hub.Hives.RecipeSo
-  recipeImage: {fileID: 21300000, guid: 093d252d1d41041c8b4df35c330dcc59, type: 3}
+  recipeImage: {fileID: 21300000, guid: b018f7c84c7eac04db9ad1778c5f7441, type: 3}
   recipeName: Buckwheat Honey
   plantRequired: {fileID: 11400000, guid: e3d0705f2397c6f40bad19af004749ab, type: 2}
   honeyProduced: {fileID: 11400000, guid: 83d80456a90db8441bbc321ba266533a, type: 2}

@@ -15,7 +15,7 @@ MonoBehaviour:
   name: Buckwheat
   plantType: 0
   growTimeMax: 1
-  plantSprite: {fileID: 21300000, guid: dd3db1e5b4263437aa298781bd55d726, type: 3}
+  plantSprite: {fileID: 21300000, guid: b7368aa3f1b56cc41bd2512b68b774ec, type: 3}
   grownPlantPrefab: {fileID: 9104923235424926737, guid: 843d0271a3a5ba54abffb785d2252dba,
     type: 3}
   notGrownPlantPrefab: {fileID: 9104923235424926737, guid: 3672717b1345c0447a1daa3fe5ad6f44,
